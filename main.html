@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+    <div class="container">
+        <h2 id="title">jQuery</h2>
+        <h2 id="title-new" data-name="jiaxzheng">jQuery-NEW</h2>
+        <p id="hide">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad amet at consequatur cumque cupiditate dolore dolores ex expedita incidunt ipsam maiores, necessitatibus nobis optio pariatur repudiandae tempora tempore! Impedit, laborum.</p>
+        <input id="check" type="checkbox" checked="checked" />
+
+        <p id="animation">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci culpa distinctio eligendi fugit itaque necessitatibus soluta! A accusantium animi aperiam, error impedit maxime modi quibusdam rerum sit soluta tenetur veniam?</p>
+        </div>
+  <script src="external/requirejs/require.js"></script>
+<script>
+	requirejs.config({
+        baseUrl: './external/',
+        paths: {
+            sizzle: 'sizzle/dist/sizzle',
+            qunit: 'qunit/qunit',
+            requirejs: 'requirejs/require',
+            sinon: 'sinon/fake_timers'
+        }
+    });
+    this.noGlobal = false;
+
+    // Callbacks and Deferred objects
+    require(['../src/jquery'], function ($) {
+        var cb_queue = $.Callbacks("once memory");
+        cb_queue.add(function (name) {
+            console.log(name);
+            return name[0];
+        });
+        cb_queue.fire("Jiaxiang Zheng");
+        cb_queue.add(function (ch) {
+            console.log(ch);
+            return;
+        });
+    });
+
+    // data cache module
+    require(['../src/jquery'], function ($) {
+        console.log($('#title-new').data());
+        console.log($('#title-new').data('name'));
+
+        var containerA = $('.container'),
+            containerB = $('.container');
+        containerA.data({
+            name: 'Jiaxiang Zheng'
+        });
+        containerB.data({
+            name: 'Jiaxiang Zheng - UPDATE'
+        });
+        console.log(containerA.data('name'));
+        console.log(containerB.data('name'));
+
+        $.data(containerA, {
+            name: 'A'
+        });
+        $.data(containerB, {
+            name: 'B'
+        });
+        console.log($.data(containerA, 'name'));
+        console.log($.data(containerB, 'name'));
+
+        var h2 = $('h2');
+        $.data(h2, "foo", 'bar');
+    });
+
+    // queue module
+    require(['../src/jquery'], function ($) {
+
+    });
+
+    // event module
+    require(['../src/jquery'], function (jQuery) {
+//        可以通过多种方式实现事件的绑定，如下所示:
+//        $('#foo').click(function(){ })
+//        $('#foo').bind('click',function(){ })
+//        $("foo").delegate("td", "click", function() { });
+//        $("foo").on("click", "td", function() { });
+
+        var $bd = $('.container');
+        for (var i = 0; i < 10; i++) {
+            $bd.append('<p>test</p>');
+        }
+
+        // on 支持绑定多个事件
+        $bd.on({
+            click: function (evt) {
+                console.log('A');
+            }
+        }, 'p');
+
+        $bd.on('click', 'p', undefined, function (evt) {
+            $(this).css('backgroundColor', 'red');
+        }, 1);
+
+        $('#title').click(function (evt) {
+            $(this).css('backgroundColor', 'blue');
+        });
+
+        //给element绑定hello事件
+        $('#title').bind("hello", function () {
+            console.log("hello world!");
+        });
+        //触发hello事件
+        $('#title').trigger("hello");
+
+        $('.container').delegate("p", "click", function (evt) {
+            console.log(evt);
+        });
+    });
+
+    // animation module
+    require(['../src/jquery'], function ($) {
+        var div = $('#animation');
+        div.show(1000);
+        div.hide(2000);
+        div.show(3000);
+    })
+
+    require(['../src/jquery'], function ($) {
+//        $('#hide').show(1000).hide(2000).show(3000);
+
+        ///////////////////////////////dom manipulation/////////////////////////////////
+        $('#title').get(0); // return the first matched dom node
+
+        //////////////////////////attr|props setter/getter//////////////////////////////
+        // attr getter/setter
+        $('#title').attr('data-main', 'title');
+        $('#title').attr('data-main');
+        $('#check').attr('checked');
+        $('#title').attr({
+            'name': 'Jiaxiang Zheng',
+            'mail': 'jiaxiang.zheng135@gmail.com'
+        });
+
+        $.propHooks.open = {
+            get: function (elem) {
+                console.log('get');
+            },
+            set: function (elem, value) {
+                console.log('set');
+            }
+        };
+        // prop getter/setter
+        $('#title').prop('open', false);
+        $('#title').prop('ABC', 'DEF');
+
+        ///////////////////////////promise|defer object////////////////////////////////
+        // promise & defer object
+        var defer = $.Deferred();
+        setTimeout(function () {
+            defer.resolve('HI');
+        }, 50);
+        defer.then(function (msg) { // 每次调用then实际会返回一个新的promise对象，用于链式调用then
+            console.log(msg);
+        });
+        defer.done(function (msg) {
+            console.log('I came from ' + msg);
+        });
+    });
+</script>
+</body>
+</html>
