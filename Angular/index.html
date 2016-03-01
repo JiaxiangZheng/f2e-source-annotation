@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="angular.js"></script>
+</head>
+<body ng-app="MyApp" ng-controller="MyAppCtrl">
+  <div>{{ welcome }}</div>
+  <script>
+    angular
+      .module('MyApp', [])
+      .run(function () {
+        console.log('1. hello world');
+      })
+      .config(function (UserServiceProvider) {
+        UserServiceProvider.setName('Jiaxiang');
+      })
+      .provider('UserService', function () {
+        var name = '';
+        return {
+          setName: function(_name) {
+            name = _name;
+          },
+          $get: function () {
+            return {
+              name: name
+            }
+          }
+        }
+      })
+      .controller('MyAppCtrl', function ($scope, UserService) {
+        console.log('2. hello world into controller');
+        $scope.welcome = 'Hello World';
+        console.log(UserService.name);
+      })
+
+  </script>
+</body>
+</html>
