@@ -3,10 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.2/css/bootstrap.css" rel="stylesheet">
   <script src="angular.js"></script>
 </head>
-<body ng-app="MyApp" ng-controller="MyAppCtrl">
-  <div>{{ welcome }}</div>
+<body>
+  <div class="container" ng-app="MyApp" ng-controller="MyAppCtrl">
+    <div class="row"><h2>{{ welcome }}</h2></div>
+    <div class="row content-row">
+      <div class="col-xs-12 col-sm-6 data-details">
+        <h5>Where We Get Our Data</h5>
+        <p class="lead selectionShareable">We leverage machine learning, web crawlers, primary sources, and natural language processing to extract data from millions of news articles and websites daily.</p>
+        <p class="lead selectionShareable">Our team of in-house analysts verify the data every day - so you can close deals with conviction.</p>
+        <div class="row hidden-xs">
+          <div class="col-xs-12">
+            <h5>Key Stats</h5>
+            <ul class="list-unstyled statlist">
+                <li><p class="lead selectionShareable"><strong>1M+</strong> Private companies</p></li>
+                <li><p class="lead selectionShareable"><strong>470K+</strong> Companies with employee data</p></li>
+                <li><p class="lead selectionShareable"><strong>100K+</strong> Funding events</p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-lg-offset-1 col-lg-5 data-image">
+        <img src="https://wordpress.mattermark.com/wp-content/themes/mm-landing-site/assets/images/mm_data_diagram.svg" alt="Data Sources Diagram">
+      </div>
+    </div>
+  </div>
+
   <script>
     angular
       .module('MyApp', [])
