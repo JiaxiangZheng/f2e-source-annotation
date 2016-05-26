@@ -104,7 +104,7 @@ var addPoolingTo = function (CopyConstructor, pooler) {
     NewKlass.poolSize = DEFAULT_POOL_SIZE;
   }
   // NOTE(xuanfeng): 调用 release 会自动调用其 destructor 方法，同时如果 instancePool.length
-  // 小于给定 poolSize，则将该实例加入实例对象池而非直接垃圾回收，以提升性能
+  //                 小于给定 poolSize，则将该实例加入实例对象池而非直接垃圾回收，以提升性能。
   NewKlass.release = standardReleaser;
   return NewKlass;
 };

@@ -18,6 +18,10 @@ var emptyObject = require('fbjs/lib/emptyObject');
 var invariant = require('fbjs/lib/invariant');
 var warning = require('fbjs/lib/warning');
 
+// NOTE(xuanfeng): 每一个 ReactComponent 实例（publicInstance）内部实际上还会有一个 internalInstance，
+// 由 ReactInstanceMap 来维护其对应关系（实际上是取其 _reactInternalInstance 域的值），当 componentDidMount 
+// 以后才会设置上这个属性值，所以如果在组件被销毁以后，我们是拿不到它的 internalInstance 的。
+
 /**
  * Base class helpers for the updating state of a component.
  */
@@ -25,6 +29,11 @@ function ReactComponent(props, context, updater) {
   this.props = props;
   this.context = context;
   this.refs = emptyObject;
+
+  // NOTE(xuanfeng): React 整个代码中都重度依赖于依赖注入（不同于 Angular 的依赖注入），
+  // 这样不同环境下（如 server side ）可以用不同的组件注入，参考 ReactDOM 文件的代码，
+  // updater 的注入可以参考 ReactCompositeComponent 文件的 mountComponent 方法
+
   // We initialize the default updater but the real one gets injected by the
   // renderer.
   this.updater = updater || ReactNoopUpdateQueue;
@@ -58,6 +67,9 @@ ReactComponent.prototype.isReactComponent = {};
  * @protected
  */
 ReactComponent.prototype.setState = function (partialState, callback) {
+  // NOTE(xuanfeng): setState 提供了 callback 回调，因为直接调用 setState 并不一定导致 this.state 立马发生变化（有一个 queue 维护 state 的更新及及回调函数）
+  //                 注：不能传入 null 或 undefined 状态值
+  //                 本质上 setState 里只有两个调用，全由 updater 内部处理完成
   !(typeof partialState === 'object' || typeof partialState === 'function' || partialState == null) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'setState(...): takes an object of state variables to update or a ' + 'function which returns an object of state variables.') : invariant(false) : undefined;
   if (process.env.NODE_ENV !== 'production') {
     process.env.NODE_ENV !== 'production' ? warning(partialState != null, 'setState(...): You passed an undefined or null state object; ' + 'instead, use forceUpdate().') : undefined;

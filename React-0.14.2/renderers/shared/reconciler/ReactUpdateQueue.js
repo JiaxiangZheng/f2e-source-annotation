@@ -184,6 +184,7 @@ var ReactUpdateQueue = {
       return;
     }
 
+    // NOTE(xuanfeng): 这个状态队列就是一个数组
     var queue = internalInstance._pendingStateQueue || (internalInstance._pendingStateQueue = []);
     queue.push(partialState);
 

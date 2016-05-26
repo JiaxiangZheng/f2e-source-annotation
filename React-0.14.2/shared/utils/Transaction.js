@@ -122,6 +122,7 @@ var Mixin = {
    * @return {*} Return value from `method`.
    */
   perform: function (method, scope, a, b, c, d, e, f) {
+    // NOTE(xuanfeng): 开始执行事务
     !!this.isInTransaction() ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Transaction.perform(...): Cannot initialize a transaction when there ' + 'is already an outstanding transaction.') : invariant(false) : undefined;
     var errorThrown;
     var ret;
@@ -136,6 +137,7 @@ var Mixin = {
       ret = method.call(scope, a, b, c, d, e, f);
       errorThrown = false;
     } finally {
+      // NOTE(xuanfeng): 这里为啥用这么多层 try catch，if 语句没看出来有啥必要，不能一个 try catch 套住所有吗？
       try {
         if (errorThrown) {
           // If `method` throws, prefer to show that stack trace over any thrown

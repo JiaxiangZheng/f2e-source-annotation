@@ -19,6 +19,8 @@ function warnTDZ(publicInstance, callerName) {
   }
 }
 
+// NOTE(xuanfeng): ReactNoopUpdateQueue 是一个抽象的状态更新队列，具体实现可以参考 ReactUpdateQueue，这里因为是抽象实现，所以直接调用实际上不会执行任何操作，开发环境会提示错误 
+
 /**
  * This is the abstract API for an update queue.
  */

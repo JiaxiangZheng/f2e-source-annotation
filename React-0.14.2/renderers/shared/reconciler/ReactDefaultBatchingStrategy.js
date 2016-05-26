@@ -24,6 +24,7 @@ var RESET_BATCHED_UPDATES = {
   }
 };
 
+// NOTE(xuanfeng): 在该事务执行结束的时候，调用 ReactUpdates.flushBatchedUpdates 批量更新
 var FLUSH_BATCHED_UPDATES = {
   initialize: emptyFunction,
   close: ReactUpdates.flushBatchedUpdates.bind(ReactUpdates)

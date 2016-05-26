@@ -136,6 +136,8 @@ function runBatchedUpdates(transaction) {
   }
 }
 
+// NOTE(xuanfeng): 真正地在执行更新状态，重新渲染也会发生在里面
+//                 看起来像个死循环，不过内部在更新 dirtyComponents 值
 var flushBatchedUpdates = function () {
   // ReactUpdatesFlushTransaction's wrappers will clear the dirtyComponents
   // array and perform any updates enqueued by mount-ready handlers (i.e.,
@@ -157,6 +159,7 @@ var flushBatchedUpdates = function () {
     }
   }
 };
+// NOTE(jiaxzheng): 注意，这里对 flushBatchedUpdates 进行了包装，外部调用的是这个包装后的结果
 flushBatchedUpdates = ReactPerf.measure('ReactUpdates', 'flushBatchedUpdates', flushBatchedUpdates);
 
 /**
@@ -172,6 +175,10 @@ function enqueueUpdate(component) {
   // function, like setProps, setState, forceUpdate, etc.; creation and
   // destruction of top-level components is guarded in ReactMount.)
 
+  // NOTE(xuanfeng): isBatchingUpdates 表示什么？何时为 true？值在哪里被设上？
+  //                 在初始注入的时候，会注入 ReactDefaultBatchingStrategy | ReactServerBatchingStrategy，batchingStrategy 即这二者之一。
+  //                 未进入 batch update 状态时，调用 batchingStrategy.batchedUpdates，则进入其中事务的 perform，即开始 batch update 操作，
+  //                 后续的所有 enqueueUpdate 操作都会直接将 component 推入 dirtyComponents 中。
   if (!batchingStrategy.isBatchingUpdates) {
     batchingStrategy.batchedUpdates(enqueueUpdate, component);
     return;
