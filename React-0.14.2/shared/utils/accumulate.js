@@ -21,6 +21,7 @@ var invariant = require('fbjs/lib/invariant');
  * @return {*|array<*>} An accumulation of items.
  */
 function accumulate(current, next) {
+  // NOTE(xuanfeng): 可以简化成一个合并数组生成新数组的过程 [...current, ...next]
   !(next != null) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'accumulate(...): Accumulated items must be not be null or undefined.') : invariant(false) : undefined;
   if (current == null) {
     return next;
@@ -32,11 +33,12 @@ function accumulate(current, next) {
     if (currentIsArray) {
       return current.concat(next);
     } else {
-      if (nextIsArray) {
-        return [current].concat(next);
-      } else {
-        return [current, next];
-      }
+      return [current].concat(next);
+      // if (nextIsArray) {
+      //   return [current].concat(next);
+      // } else {
+      //   return [current, next];
+      // }
     }
   }
 }

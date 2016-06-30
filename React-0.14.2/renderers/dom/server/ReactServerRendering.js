@@ -35,7 +35,7 @@ function renderToString(element) {
     ReactUpdates.injection.injectBatchingStrategy(ReactServerBatchingStrategy);
 
     var id = ReactInstanceHandles.createReactRootID();
-    // 与 renderToStaticMarkup 唯一的区别在于传入的参数，本质上是向 ReactServerRenderingTransaction 传入参数
+    // NOTE(xuanfeng): 与 renderToStaticMarkup 唯一的区别在于传入的参数，本质上是向 ReactServerRenderingTransaction 传入参数
     transaction = ReactServerRenderingTransaction.getPooled(false);
 
     return transaction.perform(function () {

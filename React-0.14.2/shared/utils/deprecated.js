@@ -39,6 +39,7 @@ function deprecated(fnName, newModule, newPackage, ctx, fn) {
     };
     // We need to make sure all properties of the original fn are copied over.
     // In particular, this is needed to support PropTypes
+    // NOTE(xuanfeng): 用 assign 为了保持 fn 的属性值
     return assign(newFn, fn);
   }
 
