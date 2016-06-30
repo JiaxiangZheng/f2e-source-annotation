@@ -66,6 +66,7 @@ var getIteratorFn = require('../../../shared/utils/getIteratorFn');
 
 var ANONYMOUS = '<<anonymous>>';
 
+// NOTE(xuanfeng): 开发环境下创建 ReactElement 的时候，就会对其 props 作验证
 var ReactPropTypes = {
   array: createPrimitiveTypeChecker('array'),
   bool: createPrimitiveTypeChecker('boolean'),
@@ -89,6 +90,7 @@ function createChainableTypeChecker(validate) {
   function checkType(isRequired, props, propName, componentName, location, propFullName) {
     componentName = componentName || ANONYMOUS;
     propFullName = propFullName || propName;
+    // NOTE(xuanfeng): 如果属性为 null，则直接判断是否为必填项，否则对其值类型进行校验
     if (props[propName] == null) {
       var locationName = ReactPropTypeLocationNames[location];
       if (isRequired) {

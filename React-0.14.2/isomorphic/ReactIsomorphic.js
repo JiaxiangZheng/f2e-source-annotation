@@ -21,12 +21,15 @@ var ReactPropTypes = require('./classic/types/ReactPropTypes');
 var ReactVersion = require('../ReactVersion');
 
 var assign = require('../shared/stubs/Object.assign');
+
+// NOTE(xuanfeng): 没看懂，在生产环境下就是返回输入的第一个参数
 var onlyChild = require('./children/onlyChild');
 
 var createElement = ReactElement.createElement;
 var createFactory = ReactElement.createFactory;
 var cloneElement = ReactElement.cloneElement;
 
+// NOTE(xuanfeng): 在开发环境下会对参数类型等进行严格的校验，但考虑到这些验证会对性能有一定影响，线上环境不会作校验 
 if (process.env.NODE_ENV !== 'production') {
   createElement = ReactElementValidator.createElement;
   createFactory = ReactElementValidator.createFactory;

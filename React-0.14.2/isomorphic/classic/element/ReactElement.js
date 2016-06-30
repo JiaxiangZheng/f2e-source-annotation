@@ -11,6 +11,7 @@
 
 'use strict';
 
+// TODO(xuanfeng): ReactCurrentOwner 有何作用？貌似 _owner 是 ReactCompositeComponentWrapper？
 var ReactCurrentOwner = require('./ReactCurrentOwner');
 
 var assign = require('../../../shared/stubs/Object.assign');
@@ -105,6 +106,10 @@ var ReactElement = function (type, key, ref, self, source, owner, props) {
   return element;
 };
 
+// NOTE(xuanfeng): 
+//  使用：createElement('a', { href: url, target: '_blank' }, '内容')
+//       createElement(App, appProps, ...) // App.defaultProps = xxx
+//  本质上创建的是一个包含 type、key、props 等属性的对象
 ReactElement.createElement = function (type, config, children) {
   var propName;
 
@@ -235,6 +240,7 @@ ReactElement.cloneElement = function (element, config, children) {
   return ReactElement(element.type, key, ref, self, source, owner, props);
 };
 
+// NOTE(xuanfeng): 何谓 ReactElement、何谓 ReactComponent，何谓 ReactClass
 /**
  * @param {?object} object
  * @return {boolean} True if `object` is a valid component.
