@@ -1,6 +1,4 @@
-# 源码预处理：
-
-由于 React 中代码的模块引入都是使用 `react('component')` 的方式而非相对路径引入，导致很多情况下无法在编辑器中正常地作文件间跳转。此外，最终通过 Gulp 生成的模块文件会通过一个叫 `flatten` 的插件将文件的层级破坏掉，使得所有文件全在同一个目录下，这会导致阅读源代码的时候不能很好的按目录结构进行功能划分。而且最终打包出来的代码也难以通过 source-map 反映出源文件。因此有必要对 React 的打包工具作一定的预处理。
+如果看 React [源代码](https://github.com/facebook/react)，会发现其中模块的引用全都是使用 `react('component')` 的方式，而非相对路径引入，导致很多情况下无法在编辑器中正常地作文件间跳转。此外，最终通过 Gulp 生成的模块文件会通过一个叫 `flatten` 的插件将文件的目录结构破坏掉，使得所有文件全在同一个目录下，这会导致阅读源代码的时候不能很好的按目录结构进行功能划分。而且最终打包出来的代码也难以通过 source-map 反映出源文件。为此，在阅读源码前，有必要对 React 的打包工具作一定的预处理。
 
 直接看项目根目录的 `gulpfile.js` 不难发现，`gulp react:modules` 本质上就是输入源代码，对源代码中所有的 `__DEV__` 条件判断作一个替换，变成 `process.env.NODE_ENV !== 'production'`；然后将源码中相应的 `require('A')` 变成 `require('./A')` 的形式（仅对引入非 `node_modules` 的情况作这样的处理），最后把所有模块的目录层级展开变成一个文件夹下的文件。这也是为何 React 可以使用 `require('react/lib/ReactDOM')` 这种方式。
 
@@ -43,7 +41,6 @@ if (process.env.NODE_ENV !== 'test') {
 	    if (!/\/$/.test(res)) {
 	      res += '/';
 	    }
-	    // console.log(source, dest, res);
 	    modulePrefix = res;
 	  }
 	}
@@ -56,3 +53,7 @@ if (process.env.NODE_ENV !== 'test') {
 ```bash
 browserify source/React.js --standalone React --debug -o build/react-bundle.js
 ```
+
+这样就能生成一个带目录结构引用的源代码了。
+
+接下来就是我们的源码阅读之旅。

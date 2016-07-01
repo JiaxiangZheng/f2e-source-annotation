@@ -32,6 +32,7 @@ function renderToString(element) {
 
   var transaction;
   try {
+    // NOTE(xuanfeng): 改写默认的注入更新策略，在服务端，batchingStrategy 实际上啥也不干。isBatchingUpdates: false,  batchedUpdates: () => {}
     ReactUpdates.injection.injectBatchingStrategy(ReactServerBatchingStrategy);
 
     var id = ReactInstanceHandles.createReactRootID();

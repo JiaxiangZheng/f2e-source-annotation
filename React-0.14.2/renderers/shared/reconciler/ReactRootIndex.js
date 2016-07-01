@@ -12,6 +12,7 @@
 
 'use strict';
 
+// NOTE(xuanfeng): renderers/dom/client/ClientReactRootIndex.js & renderers/dom/server/ServerReactRootIndex.js
 var ReactRootIndexInjection = {
   /**
    * @param {function} _createReactRootIndex

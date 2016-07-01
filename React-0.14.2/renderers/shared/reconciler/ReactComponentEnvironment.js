@@ -15,6 +15,7 @@ var invariant = require('fbjs/lib/invariant');
 
 var injected = false;
 
+// NOTE(xuanfeng): 抽象的 ReactComponentEnvironment，而具体的可以参考 ReactComponentBrowserEnvironment
 var ReactComponentEnvironment = {
 
   /**

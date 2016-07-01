@@ -159,7 +159,7 @@ var flushBatchedUpdates = function () {
     }
   }
 };
-// NOTE(jiaxzheng): 注意，这里对 flushBatchedUpdates 进行了包装，外部调用的是这个包装后的结果
+// NOTE(xuanfeng): 注意，这里对 flushBatchedUpdates 进行了包装，外部调用的是这个包装后的结果
 flushBatchedUpdates = ReactPerf.measure('ReactUpdates', 'flushBatchedUpdates', flushBatchedUpdates);
 
 /**

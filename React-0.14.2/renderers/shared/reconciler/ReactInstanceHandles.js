@@ -19,6 +19,7 @@ var invariant = require('fbjs/lib/invariant');
 var SEPARATOR = '.';
 var SEPARATOR_LENGTH = SEPARATOR.length;
 
+// NOTE(xuanfeng): 负责对 data-reactid 的相关处理
 /**
  * Maximum depth of traversals before we consider the possibility of a bad ID.
  */
@@ -108,6 +109,8 @@ function getNextDescendantID(ancestorID, destinationID) {
   return destinationID.substr(0, i);
 }
 
+// NOTE(xuanfeng): 
+// getFirstCommonAncestorID('.0.1.0.1.0.$default.0.0.1.1.4', '.0.1.0.1.0.$default.0.0.1.1.5') === '.0.1.0.1.0.$default.0.0.1.1.'
 /**
  * Gets the nearest common ancestor ID of two IDs.
  *
