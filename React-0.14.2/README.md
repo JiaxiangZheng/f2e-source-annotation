@@ -1,5 +1,3 @@
-# 源码分析
-
 从 `React.js` 文件入口，暂时忽略掉 `__REACT_DEVTOOLS_GLOBAL_HOOK__` 相关的内容。
 
 ## React 核心结构
@@ -199,10 +197,11 @@ React 的代码结构如下图所示，可以看到，`addons` 和 `shared` 是�
 
 基本上 React 对这几块内容做了尽可能能的高内聚，低耦合，通过 `ReactInjection` 注入的方式将各组件拼装起来，形成一个完整的 React。后面开始会对这些内容进行分析。
 
-- [代码预处理](./ReactCodePreprocess.md)
-- [底层基础模块](./ReactBaseModule.md)
-- [ReactIsomorphics 模块](./ReactIsomorphics.md)
-- [ReactDOM 模块](./ReactDOM.md)
+- [代码预处理](./notes/ReactCodePreprocess.md)
+- [底层基础模块](./notes/ReactBaseModule.md)
+- [同构模块](./notes/ReactIsomorphic.md)
+- [ReactDOM 模块](./notes/ReactDOM.md)
+- [ReactServerRendering](./notes/ReactServerRendering.md)
 
 *************************************************************************
 
