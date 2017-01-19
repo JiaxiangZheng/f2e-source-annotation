@@ -1,4 +1,4 @@
-React不仅仅是前端应用框架，它还支持服务端渲染，即所谓[同构渲染](http://isomorphic.net/)。`ReactIsomorphic` 模块即为同构渲染相关代码的入口。它也是我们平时引用 `const React = require('react')` 时所对应的模块。
+React不仅仅是前端应用框架，它还支持服务端渲染，这种多端渲染的能力即所谓[同构渲染](http://isomorphic.net/)。而 `ReactIsomorphic` 模块即为同构渲染相关代码的入口（即公共代码）。它也是我们平时引用 `const React = require('react')` 时所对应的模块。
 
 `ReactIsomorphic.js` 这个文件的主要目的在于对外暴露子模块内部的接口，由于这一块牵扯到 React 庞大的代码分支，我们先分析这个文件的整体结构，然后再对其中错综复杂的子结构进行分析。涉及到的子模块主要包括：
 

@@ -42,6 +42,7 @@ assign(ReactDefaultBatchingStrategyTransaction.prototype, Transaction.Mixin, {
   }
 });
 
+// NOTE(xuanfeng): 保证在退出的时候置 isBatchingUpdates 为 false
 var transaction = new ReactDefaultBatchingStrategyTransaction();
 
 var ReactDefaultBatchingStrategy = {

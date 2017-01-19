@@ -197,11 +197,14 @@ React 的代码结构如下图所示，可以看到，`addons` 和 `shared` 是�
 
 基本上 React 对这几块内容做了尽可能能的高内聚，低耦合，通过 `ReactInjection` 注入的方式将各组件拼装起来，形成一个完整的 React。后面开始会对这些内容进行分析。
 
+ReactDOM 与 ReactDOMServer 分别对应于客户端与服务端的 API 接口集合，如果直接看源码，会发现这两个文件除了导出的方法外，执行代码基本一致，均为 `ReactDefaultInjection.inject();`。所以在分析这两个入口之前，我们先分析 ReactDefaultInjection 这个模块。
+
 - [代码预处理](./notes/ReactCodePreprocess.md)
 - [底层基础模块](./notes/ReactBaseModule.md)
 - [同构模块](./notes/ReactIsomorphic.md)
+- [ReactDefaultInjection](./notes/ReactDefaultInjection.md)
 - [ReactDOM 模块](./notes/ReactDOM.md)
-- [ReactServerRendering](./notes/ReactServerRendering.md)
+- [ReactDOMServer 模块](./notes/ReactDOMServer.md)
 
 *************************************************************************
 

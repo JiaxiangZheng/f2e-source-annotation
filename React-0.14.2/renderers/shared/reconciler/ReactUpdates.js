@@ -136,8 +136,8 @@ function runBatchedUpdates(transaction) {
   }
 }
 
-// NOTE(xuanfeng): 真正地在执行更新状态，重新渲染也会发生在里面
-//                 看起来像个死循环，不过内部在更新 dirtyComponents 值
+// NOTE(xuanfeng): 真正地在执行更新状态，重新渲染也会发生在里面看起来像个死循环，不过内部在更新 dirtyComponents 值
+// TODO: 不是很明白
 var flushBatchedUpdates = function () {
   // ReactUpdatesFlushTransaction's wrappers will clear the dirtyComponents
   // array and perform any updates enqueued by mount-ready handlers (i.e.,
@@ -166,6 +166,7 @@ flushBatchedUpdates = ReactPerf.measure('ReactUpdates', 'flushBatchedUpdates', f
  * Mark a component as needing a rerender, adding an optional callback to a
  * list of functions which will be executed once the rerender occurs.
  */
+// 处理 component 中需要更新的 state 队列
 function enqueueUpdate(component) {
   ensureInjected();
 
@@ -183,6 +184,9 @@ function enqueueUpdate(component) {
     batchingStrategy.batchedUpdates(enqueueUpdate, component);
     return;
   }
+  // 如果正在进行批量更新，则直接加入到 dirtyComponents，否则需要用事务机制进行批量更新
+  // 1. isBatchingUpdates 为 true，直接加入到 dirtyComponents
+  // 2. 为 false，则进入到策略更新方法中，并置 isBatchingUpdates 为 true，同时进入事务执行 enqueueUpdate。
 
   dirtyComponents.push(component);
 }

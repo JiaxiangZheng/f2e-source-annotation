@@ -47,7 +47,6 @@ if (process.env.NODE_ENV !== 'test') {
 }
 ```
 
-
 最后，browserify 打包生成一个带 source-map 的 bundle 文件：
 
 ```bash
